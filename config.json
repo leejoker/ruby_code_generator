@@ -1,6 +1,6 @@
 {
-  "package_name": "com.boe.mps.cqbbab.bigdata",
-  "spider_package": "com.boe.mps.spider",
+  "package_name": "io.github.leejoker.data",
+  "spider_package": "io.github.leejoker.spider",
   "table_name": "cqab_creditcard",
   "class_name": "CqabCreditCard",
   "data": {
