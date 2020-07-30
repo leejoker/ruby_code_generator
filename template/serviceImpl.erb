@@ -6,7 +6,9 @@ import <%=data['package_name']%>.service.<%=data['class_name']%>Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+@Service
 public class <%=data['class_name']%>ServiceImpl implements <%=data['class_name']%>Service {
     @Autowired
     private <%=data['class_name']%>Dao <%=data['class_name'].firstdown%>Dao;
