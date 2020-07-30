@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# extension methods for String class
 class String
   def underscore
     gsub(/::/, '/')
