@@ -1,0 +1,32 @@
+package <%=data['package_name']%>.entity;
+
+import lombok.Data;
+
+import javax.persistence.*;
+
+@Table(name = "<%=data['table_name']%>")
+@Entity
+@Data
+public class <%=data['class_name']%> {
+
+    /**
+     * 主键
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    <%for item in data['data'].keys%><%if item.downcase == "id"%>
+    @Column(name = "origin_id")
+    private Long originId;<%else%>
+    @Column(name = "<%=item.underscore%>")
+    private <%=data['data'][item].class%> <%=item.firstdown%>;<%end%>
+    <%end%>
+    @Column(name = "update_time")
+    private String updateTime;
+
+    @Column(name = "order_num")
+    private Integer orderNum;
+
+    @Column(name = "publish_state")
+    private Integer publishState;
+}

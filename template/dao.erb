@@ -1,0 +1,7 @@
+package <%=data['package_name']%>.dao;
+
+import <%=data['package_name']%>.entity.<%=data['class_name']%>;
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+public interface <%=data['class_name']%>Dao extends PagingAndSortingRepository<<%=data['class_name']%>, Long> {
+}

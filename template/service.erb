@@ -1,0 +1,13 @@
+package <%=data['package_name']%>.service;
+
+import <%=data['package_name']%>.entity.<%=data['class_name']%>;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+public interface <%=data['class_name']%>Service {
+    void save(<%=data['class_name']%> <%=data['class_name'].firstdown%>);
+
+    Page<<%=data['class_name']%>> findByPage(Pageable page);
+
+    int countAll();
+}

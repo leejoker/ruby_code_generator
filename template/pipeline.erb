@@ -1,0 +1,32 @@
+package <%=data['spider_package']%>.pipeline;
+
+import <%=data['package_name']%>.entity.<%=data['class_name']%>;
+import <%=data['package_name']%>.service.<%=data['class_name']%>Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import us.codecraft.webmagic.ResultItems;
+import us.codecraft.webmagic.Task;
+import us.codecraft.webmagic.pipeline.Pipeline;
+import java.util.List;
+import java.util.Map;
+
+@Repository
+public class <%=data['class_name']%>Pipeline implements Pipeline {
+
+    private Logger log = LoggerFactory.getLogger(<%=data['class_name']%>Pipeline.class);
+
+    @Autowired
+    private <%=data['class_name']%>Service <%=data['class_name'].firstdown%>Service;
+
+    @Override
+    public void process(ResultItems resultItems, Task task) {
+        Map<String, Object> mapResults = resultItems.getAll();
+        List<<%=data['class_name']%>> <%=data['class_name'].firstdown%>List = (List<<%=data['class_name']%>>) mapResults.get("<%=data['class_name'].firstdown%>");
+        log.info("-------<%=data['class_name'].firstdown%>List-size:" + <%=data['class_name'].firstdown%>List.size());
+        for (<%=data['class_name']%> <%=data['class_name'].firstdown%> : <%=data['class_name'].firstdown%>List) {
+            <%=data['class_name'].firstdown%>Service.save(<%=data['class_name'].firstdown%>);
+        }
+    }
+}

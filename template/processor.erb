@@ -1,0 +1,43 @@
+package <%=data['spider_package']%>.processor;
+
+import <%=data['package_name']%>.entity.<%=data['class_name']%>;
+import com.boe.mps.framework.common.utils.DateUtils;
+import org.joda.time.DateTime;
+import org.springframework.stereotype.Repository;
+import us.codecraft.webmagic.Page;
+import us.codecraft.webmagic.Site;
+import us.codecraft.webmagic.processor.PageProcessor;
+import us.codecraft.webmagic.selector.Json;
+import us.codecraft.webmagic.selector.JsonPathSelector;
+import java.util.ArrayList;
+import java.util.List;
+
+@Repository
+public class <%=data['class_name']%>Processor implements PageProcessor{
+
+	private static Site site = Site.me().setRetryTimes(3).setSleepTime(100);
+
+	@Override
+	public Site getSite() {
+		return site;
+	}
+
+	@Override
+	public void process(Page page) {
+		String updateTime = DateTime.now().toString(DateUtils.DATE_FORMAT_LONG_FULL);
+		String json = page.getJson().get();
+		System.out.println("==" + json);
+//		js请求获取数据，page取数据【多层级的数据】
+		List<String> strings = new JsonPathSelector("$.Data.Table").selectList(page.getRawText());
+		List<<%=data['class_name']%>> list = new ArrayList<>();
+		for (String str : strings) {
+			Json item = new Json(str);
+			<%=data['class_name']%> <%=data['class_name'].firstdown%> = new <%=data['class_name']%>();<%for item in data['data'].keys%><%if item.downcase == "id"%>
+            <%=data['class_name'].firstdown%>.setOriginId(item.jsonPath("$.<%=item%>").get());<%else%>
+            <%=data['class_name'].firstdown%>.set<%=item.firstup%>(item.jsonPath("$.<%=item%>").get());<%end%><%end%>
+			<%=data['class_name'].firstdown%>.setUpdateTime(updateTime);
+			list.add(<%=data['class_name'].firstdown%>);
+		}
+		page.putField("<%=data['class_name'].firstdown%>",list);
+	}
+}

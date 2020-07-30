@@ -1,0 +1,28 @@
+package <%=data['package_name']%>.service.impl;
+
+import <%=data['package_name']%>.dao.<%=data['class_name']%>Dao;
+import <%=data['package_name']%>.entity.<%=data['class_name']%>;
+import <%=data['package_name']%>.service.<%=data['class_name']%>Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+public class <%=data['class_name']%>ServiceImpl implements <%=data['class_name']%>Service {
+    @Autowired
+    private <%=data['class_name']%>Dao <%=data['class_name'].firstdown%>Dao;
+
+    @Override
+    public void save(<%=data['class_name']%> <%=data['class_name'].firstdown%>) {
+        <%=data['class_name'].firstdown%>Dao.save(<%=data['class_name'].firstdown%>);
+    }
+
+    @Override
+    public Page<<%=data['class_name']%>> findByPage(Pageable page) {
+        return <%=data['class_name'].firstdown%>Dao.findAll(page);
+    }
+
+    @Override
+    public int countAll() {
+        return (int) <%=data['class_name'].firstdown%>Dao.count();
+    }
+}
