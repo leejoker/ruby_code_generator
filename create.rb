@@ -19,7 +19,7 @@ class Creater
         Dir.mkdir('dist') unless FileTest.exist?('dist')
         fromfile = 'template/' + file
         dirname = File.basename(fromfile, '.erb')
-        tofile = create_to_file(dirname)
+        tofile = create_to_file(json, dirname)
         create_from_erb(json, fromfile, tofile)
         tofile.close
       end
@@ -36,11 +36,11 @@ class Creater
     todir
   end
 
-  def create_to_file(dirname)
+  def create_to_file(json, dirname)
     filename = if dirname == 'entity'
-                 data['class_name'] + '.java'
+                 json['class_name'] + '.java'
                else
-                 data['class_name'] + dirname.firstup + '.java'
+                 json['class_name'] + dirname.firstup + '.java'
                end
     File.new(create_to_dir(dirname) + '/' + filename, 'w')
   end
