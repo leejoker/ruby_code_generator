@@ -1,0 +1,14 @@
+{
+  "Id": "1",
+  "BaseCurrencyCode": "12",
+  "FirstCurrencyCode": "12",
+  "SecondCurrencyCode": "13",
+  "BuyPrice": "9.9615",
+  "SalePrice": "9.9855",
+  "LowestBuyIn": "9.9907",
+  "HighestSellOut": "9.9678",
+  "UpDown": "0",
+  "Date": "2020-07-28",
+  "Time": "15:28:51",
+  "CurrencyPair": "GBP/HKD(英镑/港元)"
+}

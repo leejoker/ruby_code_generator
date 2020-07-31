@@ -19,7 +19,7 @@ public class <%=data['class_name']%> {
     @Column(name = "origin_id")
     private Long originId;<%else%>
     @Column(name = "<%=item.underscore%>")
-    private <%=data['data'][item].class%> <%=item.firstdown%>;<%end%>
+    private String <%=item.firstdown%>;<%end%>
     <%end%>
     @Column(name = "update_time")
     private String updateTime;
@@ -29,4 +29,7 @@ public class <%=data['class_name']%> {
 
     @Column(name = "publish_state")
     private Integer publishState;
+
+    @Column(name = "on_top")
+    private Integer onTop;
 }

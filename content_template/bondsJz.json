@@ -1,0 +1,10 @@
+{
+  "Name": "2020年记账式附息（十期）国债",
+  "ProdCode": "200010",
+  "ProdType": "01",
+  "YearRate": 2.15,
+  "NetSellPrice": 99.93,
+  "NetBuyPrice": 99.85,
+  "Interest": 0.06,
+  "IsNew": "0"
+}

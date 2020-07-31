@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class <%=data['class_name']%>ServiceImpl implements <%=data['class_name']%>Service {
     @Autowired
@@ -26,5 +28,13 @@ public class <%=data['class_name']%>ServiceImpl implements <%=data['class_name']
     @Override
     public int countAll() {
         return (int) <%=data['class_name'].firstdown%>Dao.count();
+    }
+
+    @Override
+    public List<<%=data['class_name']%>> getPublishList() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("select * from <%=data['table_name']%> where publish_state = 1 order by on_top desc,order_num asc,update_time desc");
+        List<<%=data['class_name']%>> list = jdbcTemplate.query(buffer.toString(), new BeanPropertyRowMapper<>(<%=data['class_name']%>.class));
+        return list;
     }
 }

@@ -10,7 +10,20 @@ class Creater
     str = IO.read('config.json')
     config = JSON.parse(str)
     puts config
-    create(config)
+    read_content_template(config)
+  end
+
+  def read_content_template(json)
+    Dir.foreach('./content_template') do |file|
+      if file != '.' && file != '..'
+        filename = File.basename(file, '.json')
+        json['table_name'] = json['table_prefix'] + filename.underscore
+        json['class_name'] = json['class_prefix'] + filename.firstup
+        json['module_name'] = filename.downcase
+        json['data'] = JSON.parse(File.read('./content_template/' + file))
+        create(json)
+      end
+    end
   end
 
   def create(json)
