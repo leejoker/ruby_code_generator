@@ -8,7 +8,11 @@ require './string_extension.rb'
 class Creater
   def read_content_template(json)
     Dir.foreach('./content_template') do |file|
-      yield json, file if file != '.' && file != '..'
+      if file != '.' && file != '..'
+        yield json, file
+        json['data'] = JSON.parse(File.read('./content_template/' + file))
+        create(json)
+      end
     end
   end
 
