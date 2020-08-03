@@ -6,6 +6,8 @@ import <%=data['package_name']%>.service.<%=data['class_name']%>Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,8 @@ import java.util.List;
 public class <%=data['class_name']%>ServiceImpl implements <%=data['class_name']%>Service {
     @Autowired
     private <%=data['class_name']%>Dao <%=data['class_name'].firstdown%>Dao;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Override
     public void save(<%=data['class_name']%> <%=data['class_name'].firstdown%>) {
