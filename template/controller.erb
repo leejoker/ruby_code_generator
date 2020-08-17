@@ -27,9 +27,9 @@ public class <%=data['class_name']%>Controller {
     @Autowired
     private <%=data['class_name']%>Service <%=data['class_name'].firstdown%>Service;
 
-    @GetMapping(value = "", produces = {"application/json; charset=UTF-8"})
+    @GetMapping(value = "/publishList", produces = {"application/json; charset=UTF-8"})
     @ResponseBody
-    public ResponseResult listApi() {
+    public ResponseResult getPublishList() {
         try {
             List<<%=data['class_name']%>> publishList = <%=data['class_name'].firstdown%>Service.getPublishList();
             publishList = publishList == null ? Lists.newArrayList() : publishList;
@@ -38,5 +38,42 @@ public class <%=data['class_name']%>Controller {
             log.error("获取发布数据失败: exception={}", ExceptionUtils.getStackTrace(e));
         }
         return ResponseResult.error("获取发布数据失败");
+    }
+
+    @RequestMapping(value = "/query", produces = {"application/json; charset=UTF-8"})
+    @ResponseBody
+    public DataTables<Map<String, Object>> get<%=data['class_name']%>(Integer draw, Integer start, Integer length, String name) {
+        DataTables<Map<String, Object>> dataTables = new DataTables<Map<String, Object>>();
+        Pageable page = null;
+        if (start >= 0 && length > 0) {
+            Sort orderNumSort = new Sort(Sort.Direction.DESC, "orderNum");
+            Sort updateTimeSort = new Sort(Sort.Direction.DESC, "updateTime");
+            page = new PageRequest(start / length, length, orderNumSort.and(updateTimeSort));
+        }
+        Page<<%=data['class_name']%>> queryPage;
+        if (StringUtils.isNotBlank(name)) {
+            queryPage = <%=data['class_name'].firstdown%>Service.findByNameLike(name, page);
+        } else {
+            queryPage = <%=data['class_name'].firstdown%>Service.findByPage(page);
+        }
+        long totalNum = queryPage.getTotalElements();
+        List<<%=data['class_name']%>> queryList = queryPage.getContent();
+
+        List<Map<String, Object>> rstList = new ArrayList<Map<String, Object>>();
+        for (<%=data['class_name']%> <%=data['class_name'].firstdown%> : queryList) {
+            Map<String, Object> info = new HashMap<String, Object>();
+            info.put("id", <%=data['class_name'].firstdown%>.getId());<%for item in data['data'].keys%><%if item.downcase == "id"%>
+            info.put("originId", <%=data['class_name'].firstdown%>.getOriginId());<% else %>
+            info.put("<%=item.firstdown%>", <%=data['class_name'].firstdown%>.get<%=item.firstup%>());<%end%><%end%>
+            info.put("updateTime", <%=data['class_name'].firstdown%>.getUpdateTime());
+            info.put("orderNum", <%=data['class_name'].firstdown%>.getOrderNum());
+            info.put("publishState", <%=data['class_name'].firstdown%>.getPublishState());
+            rstList.add(info);
+        }
+        dataTables.setDraw(draw + 1);
+        dataTables.setRecordsTotal(totalNum);
+        dataTables.setRecordsFiltered(totalNum);
+        dataTables.setData(rstList);
+        return dataTables;
     }
 }
