@@ -2,7 +2,7 @@
 
 require 'erb'
 require 'json'
-require './string_extension.rb'
+require './utils/string_extension.rb'
 
 # the code creator with erb template
 class Creater
